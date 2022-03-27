@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.delivery.tiago.DeliveryApiApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.719 s - in com.delivery.tiago.DeliveryApiApplicationTests
