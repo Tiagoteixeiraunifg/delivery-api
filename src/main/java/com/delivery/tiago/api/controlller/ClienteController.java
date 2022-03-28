@@ -18,6 +18,8 @@ import com.delivery.tiago.domain.model.ClienteModel;
 import com.delivery.tiago.domain.repository.ClienteRepository;
 import com.delivery.tiago.domain.service.ClienteService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
 
@@ -25,18 +27,20 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController	
 @RequestMapping("/clientes")
+@Api(value = "Cadastro de Clientes da API")
 public class ClienteController {
 	
 	private ClienteService cliSevice;
 	private ClienteRepository clienteRepository;
 	private ClientesAssembler clienteAssembler;
-		
+	
+	@ApiOperation(value = "Mostra Lista de Clientes Cadastrados")
 	@GetMapping
 	public List<ClientesDTO> findAll(){
 		return clienteAssembler.toListClientesTDO(clienteRepository.findAll());
 	}
 	
-	
+	@ApiOperation(value = "Busca Cliente Cadastrado pelo ID exemplo: dominio/clientes/ID")
 	@GetMapping(value = "/{clienteId}")
 	public ResponseEntity<ClientesDTO> findById(@PathVariable Long clienteId){
 		return clienteRepository.findById(clienteId)
@@ -47,6 +51,7 @@ public class ClienteController {
 		
 	}
 	
+	@ApiOperation(value = "Cadastra novo cliente.")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ClientesDTO saveCliente(@Valid @RequestBody ClienteModel cliModel){
@@ -55,7 +60,7 @@ public class ClienteController {
 					
 	}
 	
-	
+	@ApiOperation(value = "Atualiza um cliente cadastrado informando o ID do mesmo.")
 	@PutMapping(value = "/{clienteId}")
 	public ResponseEntity<ClientesDTO> updateCliente(@Valid @PathVariable Long clienteId,
 			@RequestBody ClienteModel cliModel){
@@ -72,6 +77,7 @@ public class ClienteController {
 					
 	}
 	
+	@ApiOperation(value = "Deleta um cliente cadastrado passando o ID.")
 	@DeleteMapping(value = "/{clienteId}")
 	public ResponseEntity<Void> delete(@PathVariable Long clienteId){
 		if(!clienteRepository.existsById(clienteId)) {
