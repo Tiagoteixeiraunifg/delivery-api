@@ -2,6 +2,7 @@ package com.delivery.tiago.api.controlller;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController	
-@RequestMapping("/clientes")
+@RequestMapping(value = "/clientes", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(value = "Cadastro de Clientes da API")
 public class ClienteController {
 	
@@ -54,9 +55,9 @@ public class ClienteController {
 	@ApiOperation(value = "Cadastra novo cliente.")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ClientesDTO saveCliente(@Valid @RequestBody ClienteModel cliModel){
+	public ResponseEntity<ClientesDTO>  saveCliente(@Valid @RequestBody ClienteModel cliModel){
 		
-		return  clienteAssembler.toModel(cliSevice.saveCliente(cliModel));
+		return ResponseEntity.ok(clienteAssembler.toModel(cliSevice.saveCliente(cliModel)));
 					
 	}
 	
