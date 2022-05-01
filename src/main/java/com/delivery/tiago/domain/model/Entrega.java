@@ -45,7 +45,7 @@ public class Entrega {
 	@ConvertGroup(from = Default.class, to = ValidationsGroup.clienteId.class)
 	@NotNull
 	@ManyToOne
-	private ClienteModel cliente;
+	private Cliente cliente;
 	
 	@Valid
 	@Embedded

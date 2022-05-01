@@ -4,4 +4,8 @@ public interface ValidationsGroup {
 
 	public interface clienteId {}
 	
+	public interface userId {}
+	
 }
+
+

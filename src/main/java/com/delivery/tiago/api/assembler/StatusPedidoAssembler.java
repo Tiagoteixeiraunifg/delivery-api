@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.delivery.tiago.api.model.StatusPedidoDTO;
+import com.delivery.tiago.api.model.output.dto.StatusPedidoDTO;
 import com.delivery.tiago.domain.model.StatusPedido;
 
 import lombok.AllArgsConstructor;

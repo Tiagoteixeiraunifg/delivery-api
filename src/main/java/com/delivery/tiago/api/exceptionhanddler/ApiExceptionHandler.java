@@ -1,6 +1,5 @@
 package com.delivery.tiago.api.exceptionhanddler;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.MessageSource;
@@ -41,7 +40,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ApiErros err = new ApiErros();
 		err.setStatus(status.value());
-		err.setDataHora(LocalDateTime.now());
+		err.setDataHora(LocalDateTime.now().toString());
 		err.setTitulo("Um ou mmais campos precisam ser preenchidos corretamente, tente novamente");
 		err.setField(fields);
 
@@ -55,7 +54,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		HttpStatus status =  HttpStatus.BAD_REQUEST;
 		ApiErros err = new ApiErros();
 		err.setStatus(status.value());
-		err.setDataHora(LocalDateTime.now());
+		err.setDataHora(LocalDateTime.now().toString());
 		err.setTitulo(ex.getMessage());
 		
 		return handleExceptionInternal(ex, err, new HttpHeaders(), status, request);
@@ -65,7 +64,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		HttpStatus status =  HttpStatus.NOT_FOUND;
 		ApiErros err = new ApiErros();
 		err.setStatus(status.value());
-		err.setDataHora(LocalDateTime.now());
+		err.setDataHora(LocalDateTime.now().toString());
 		err.setTitulo(ex.getMessage());
 		
 		return handleExceptionInternal(ex, err, new HttpHeaders(), status, request);
