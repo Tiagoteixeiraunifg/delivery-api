@@ -83,8 +83,9 @@ public class AuthenticationController {
 		}else {
 			throw new NegocioException("Erro ao autenticar usuário!");
 		}
-		
-		response.setData(assembler.toModelOptional(repository.findByEmail(dto.getEmail())));
+		UserDTO userDTO = assembler.toModelOptional(repository.findByEmail(dto.getEmail()));
+		userDTO.setToken(token1);
+		response.setData(userDTO);
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		headers.add("Token", token1);
 		SecurityContextHolder.getContext().setAuthentication(authentication);		

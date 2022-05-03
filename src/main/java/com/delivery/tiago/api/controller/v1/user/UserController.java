@@ -1,8 +1,6 @@
 package com.delivery.tiago.api.controller.v1.user;
 
 import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;

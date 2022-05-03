@@ -41,6 +41,7 @@ public class UserDTO {
 	@Enumerated(EnumType.STRING)
 	private UserPerfil userperfil;
 		
+	private String token;
 	
 	public User convertDTOToEntity() {
 		return new ModelMapper().map(this, User.class);
