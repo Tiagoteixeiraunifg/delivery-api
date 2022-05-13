@@ -1,17 +1,12 @@
 package com.delivery.tiago.api.model.output.dto;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
-
 import org.modelmapper.ModelMapper;
-
 import com.delivery.tiago.domain.ValidationsGroup;
 import com.delivery.tiago.domain.model.Cliente;
-import com.delivery.tiago.domain.model.User;
-
 import lombok.Getter;
 import lombok.Setter;
 

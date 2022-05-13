@@ -23,7 +23,7 @@ public class ClientesAssembler {
 		
 	}
 	
-	public List<ClientesDTO> toListClientesTDO(List<Cliente> listClientes){
+	public List<ClientesDTO> toListClientesDTO(List<Cliente> listClientes){
 		return  listClientes.stream()
 				.map(this::toModel)
 				.collect(Collectors.toList());

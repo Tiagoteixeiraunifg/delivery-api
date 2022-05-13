@@ -1,14 +1,11 @@
 package com.delivery.tiago.api.assembler;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
 import com.delivery.tiago.api.model.output.dto.UserDTO;
 import com.delivery.tiago.domain.model.User;
-
 import lombok.AllArgsConstructor;
 
 
@@ -41,7 +38,7 @@ private ModelMapper modelMapper;
 	}
 	
 	
-	public List<UserDTO> toListUserTDO(List<User> listUser){
+	public List<UserDTO> toListUserDTO(List<User> listUser){
 		return  listUser.stream()
 				.map(this::toModel)
 				.collect(Collectors.toList());

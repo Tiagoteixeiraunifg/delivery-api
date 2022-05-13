@@ -3,13 +3,6 @@ package com.delivery.tiago.common;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -31,12 +24,11 @@ public Docket productApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.enable(enableSwagger)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.delivery.tiago.api.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.delivery.tiago.api.controller.v1"))
 				.paths(PathSelectors.any())
 				.build()
 				.apiInfo(metaData());
 		}
-
 
 private ApiInfo metaData() {
 		return new ApiInfoBuilder().title("Spring Boot REST API")
@@ -45,7 +37,6 @@ private ApiInfo metaData() {
 				.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0/")
 				.build();
 		}
-
 
 }
 

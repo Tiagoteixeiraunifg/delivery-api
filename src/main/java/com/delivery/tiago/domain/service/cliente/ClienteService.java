@@ -1,15 +1,11 @@
 package com.delivery.tiago.domain.service.cliente;
 
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
-
 import com.delivery.tiago.domain.exception.NegocioException;
 import com.delivery.tiago.domain.model.Cliente;
 import com.delivery.tiago.domain.repository.ClienteRepository;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -52,11 +48,13 @@ public class ClienteService {
 		
 	}
 
+	
 	@Transactional
 	public void deleteCliente(Integer idCLiente) {
 		
 		clienteRepository.deleteById(idCLiente);
 	}
+	
 	
 	public Cliente updateCliente(Long IdCliente, Cliente cliModel) {
 		

@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	http.authorizeRequests().antMatchers("/api/v1/user/auth/**", "/api/v1/user/**", "/configuration/security", "/webjars/**", 
     			"/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/manage/**").permitAll()
     	.anyRequest().authenticated()
-    	.and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+    	.and().cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
     	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     	.and().addFilterBefore(new TokenAuthenticationFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);
 

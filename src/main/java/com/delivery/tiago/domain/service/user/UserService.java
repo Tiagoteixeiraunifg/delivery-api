@@ -1,10 +1,8 @@
 package com.delivery.tiago.domain.service.user;
 
 import java.util.Optional;
-
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import com.delivery.tiago.api.assembler.UserAssembler;
 import com.delivery.tiago.api.model.output.dto.UserDTO;
 import com.delivery.tiago.domain.model.User;
@@ -38,6 +36,11 @@ public class UserService {
 		return repository.save(user);
 	}
 	
-	
+	@Transactional
+	public void deleteUser(Integer idUser) {
+			
+		repository.deleteById(idUser);	
+		
+	}
 
 }

@@ -18,15 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.delivery.tiago.api.assembler.UserAssembler;
 import com.delivery.tiago.api.model.output.dto.JwtUserDTO;
 import com.delivery.tiago.api.model.output.dto.UserDTO;
 import com.delivery.tiago.api.model.output.dto.response.Response;
 import com.delivery.tiago.domain.exception.NegocioException;
 import com.delivery.tiago.domain.repository.UserRepository;
-import com.delivery.tiago.domain.security.JwtTokenUtil;
-import com.delivery.tiago.domain.service.security.impl.JwtUserDetailsServiceImpl;
 import com.delivery.tiago.domain.service.security.impl.TokenService;
 
 import io.swagger.annotations.Api;
@@ -41,15 +38,9 @@ public class AuthenticationController {
 	
 	@Autowired(required=true)
 	private AuthenticationManager authenticationManager;
-
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
 	
 	@Autowired
 	private TokenService tokenService;
-
-	@Autowired
-	private JwtUserDetailsServiceImpl userDetailsService;
 	
 	@Autowired
 	private UserRepository repository;
@@ -84,11 +75,15 @@ public class AuthenticationController {
 			throw new NegocioException("Erro ao autenticar usuário!");
 		}
 		UserDTO userDTO = assembler.toModelOptional(repository.findByEmail(dto.getEmail()));
+		
+		
 		userDTO.setToken(token1);
 		response.setData(userDTO);
+		
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		headers.add("Token", token1);
-		SecurityContextHolder.getContext().setAuthentication(authentication);		
+		SecurityContextHolder.getContext().setAuthentication(authentication);	
+		
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 
