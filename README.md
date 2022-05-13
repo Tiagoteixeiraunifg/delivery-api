@@ -51,9 +51,7 @@ ROTAS COM * SERÃO ROTAS PROTEGIDAS;
 #
 'API/V1/AUTH'; GET - PASSA UM USUARIO PARA OBTER UM TOKEN DE ACESSO E DADOS DO USUARIO
 #
-#
 Exemplo de requisição:
-#
 #
 {
   "email": "string",
@@ -61,7 +59,6 @@ Exemplo de requisição:
 }
 #
 Como resposta a API devolve:
-#
 #
 {
   "data": {
@@ -75,13 +72,11 @@ Como resposta a API devolve:
   }
 }
 #
-#
 /*ROTAS DE USUÁRIOS*/
 #
 *'API/V1/USERS' GET - OBTER LISTA DE USUARIOS (controlado pelo perfil do usuário logado, retornando apenas o seu usuário, caso seja admin retorna full)
 #
 Exemplo de requisição:
-#
 #
 {
   "data": [
@@ -97,12 +92,9 @@ Exemplo de requisição:
   ]
 }
 # 
-#
 *'API/V1/USER/{IDUSUARIO}' GET - OBTEM UM USUÁRIO ESPECIFICO PASSANDO ID
 #
-#
 Exemplo do retorno:
-#
 #
 {
   "data": {
@@ -116,12 +108,9 @@ Exemplo do retorno:
   }
 }
 #
-#
  'API/V1/USER/{OBJ.USER}' POST - CADASTRAR NOVO USUÁRIO PASSANDO OBJETO JSON
 #
-# 
 Exemplo da requisição:
-#
 #
 {
   "email": "string",
@@ -133,12 +122,9 @@ Exemplo da requisição:
   "userperfil": "ADMIN" ou "USUARIO"
 }
 #
-# 
 *'API/V1/USER/{OBJ.USER}' PUT - ATUALIZAR UM USUÁRIO PASSANDO OBJETO JSON
 #
-#
 Exemplo da requisição;
-#
 #
 {
   "email": "string",
@@ -150,24 +136,17 @@ Exemplo da requisição;
   "userperfil": "ADMIN"
 }
 #
-#
 *'API/V1/USER/{IDUSUARIO} DELETE - DELETAR USUÁRIO PASSANDO ID
-#
 #
 Exemplo da requisição:
 #
-#
 http://localhost/API/V1/USER/1, isso deletará o usuário do ID 1, se o usuário que solicitou for um ADMIN.
-#
 #
 /*ROTAS DO CADASTRO DE CLIENTES*/
 #
-#
 *'API/V1/CLIENTE/ GET - OBTER LISTA DE USUARIOS (o sistema devolve apenas os clientes cadastrados do usuário logado, caso seja o ADMIN traz todos)
 #
-#
 Exemplo de resposta:
-#
 #
 {
   "data": [
@@ -197,12 +176,9 @@ Exemplo de resposta:
   ]
 }
 #
-#
 *'API/V1/CLIENTE/{IDCLIENTE} GET - OBTEM UM CLIENTE ESPECIFICO PASSANDO ID
 #
-#
 Exemplo de resposta:
-#
 #
 {
   "data": {
@@ -231,12 +207,9 @@ Exemplo de resposta:
   "errors": {}
 }
 #
-#
 *'API/V1/CLIENTE/{OBJ.CLIENTE} POST - CADASTRAR NOVO CLIENTE PASSANDO OBJETO JSON
 #
-#
 Exemplo de requisição:
-#
 #
 {
   "cpf": "string",
@@ -255,13 +228,10 @@ Exemplo de requisição:
     "id": 0,
   }
 }
-# 
 #  
 *'API/V1/CLIENTE/{OBJ.CLIENTE} PUT - ATUALIZAR UM CLIENTE PASSANDO OBJETO JSON
 #
-#
 Exemplo de requisição:
-#
 #
 {
   "cpf": "string",
@@ -281,12 +251,9 @@ Exemplo de requisição:
   }
 }
 #
-#
 *'API/V1/CLIENTE/{IDCLIENTE} DELETE - DELETAR CLIENTE PASSANDO ID
 #
-#
 Exemplo de requisição:
-#
 #
 http://localhost/API/V1/CLIENTE/1 a api irá excluir o cliente do id 1.
 
