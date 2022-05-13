@@ -20,7 +20,8 @@ Ao iniciar o projeto com o STS o mesmo atualizarar as dependencias de acordo com
 principal e clica com o botão direito, procure Maven, e depois em Update Project, só aguardar.
 Necessário ter instalado um SGBD MySQL e configurar o Usuário, Senha e URL no src/main/resources/aplication.properties
 Obs. Não á necessidade de criar o Banco de Dados, o Sprig Data JPA já faz isso usando o; delivery?createDatabaseIfNotExist=true.
-/****EXEMPLO
+
+# EXEMPLO POM.XML
 spring.datasource.url=jdbc:mysql://SEU_URL_DO_BANCO_DE_DADOS:3306/delivery?createDatabaseIfNotExist=true&serverTimezone=UTC
 spring.datasource.username=USUARIO BANCO
 spring.datasource.password=SENHA DO BANCO
@@ -40,24 +41,28 @@ spring.mvc.pathmatch.matching-strategy=ant-path-matcher
 
 #Configuração FRONTEND
 front.baseurl=http://localhost:3000 BASE URL DO FRONT-END CONFIGURAÇÃO DO CORS
-/********FIM EXEMPLO
-
 
 
 # ENDPOINTS
 
 ROTAS COM * SERÃO ROTAS PROTEGIDAS;
-
+#
 /*ROTAS DE AUTENTICAÇÃO*/
+#
 'API/V1/AUTH'; GET - PASSA UM USUARIO PARA OBTER UM TOKEN DE ACESSO E DADOS DO USUARIO
-Exemplo:
+#
+#
+Exemplo de requisição:
+#
+#
 {
   "email": "string",
   "password": "string"
 }
-
+#
 Como resposta a API devolve:
-
+#
+#
 {
   "data": {
     "email": "string",
@@ -69,12 +74,15 @@ Como resposta a API devolve:
     "userperfil": "ADMIN"
   }
 }
-
+#
+#
 /*ROTAS DE USUÁRIOS*/
-
+#
 *'API/V1/USERS' GET - OBTER LISTA DE USUARIOS (controlado pelo perfil do usuário logado, retornando apenas o seu usuário, caso seja admin retorna full)
-Exemplo:
-
+#
+Exemplo de requisição:
+#
+#
 {
   "data": [
     {
@@ -88,10 +96,14 @@ Exemplo:
     }
   ]
 }
- 
+# 
+#
 *'API/V1/USER/{IDUSUARIO}' GET - OBTEM UM USUÁRIO ESPECIFICO PASSANDO ID
+#
+#
 Exemplo do retorno:
-
+#
+#
 {
   "data": {
     "email": "string",
@@ -103,10 +115,14 @@ Exemplo do retorno:
     "userperfil": "ADMIN"
   }
 }
-
-
+#
+#
  'API/V1/USER/{OBJ.USER}' POST - CADASTRAR NOVO USUÁRIO PASSANDO OBJETO JSON
+#
+# 
 Exemplo da requisição:
+#
+#
 {
   "email": "string",
   "id": 0,
@@ -116,10 +132,14 @@ Exemplo da requisição:
   "token": "string",
   "userperfil": "ADMIN" ou "USUARIO"
 }
-
- 
+#
+# 
 *'API/V1/USER/{OBJ.USER}' PUT - ATUALIZAR UM USUÁRIO PASSANDO OBJETO JSON
+#
+#
 Exemplo da requisição;
+#
+#
 {
   "email": "string",
   "id": 1, Obs. O ID tem de sero do usuario a ser atualizado.
@@ -129,19 +149,26 @@ Exemplo da requisição;
   "token": "string",
   "userperfil": "ADMIN"
 }
-
-
+#
+#
 *'API/V1/USER/{IDUSUARIO} DELETE - DELETAR USUÁRIO PASSANDO ID
-
+#
+#
 Exemplo da requisição:
+#
+#
 http://localhost/API/V1/USER/1, isso deletará o usuário do ID 1, se o usuário que solicitou for um ADMIN.
-
-
+#
+#
 /*ROTAS DO CADASTRO DE CLIENTES*/
-
+#
+#
 *'API/V1/CLIENTE/ GET - OBTER LISTA DE USUARIOS (o sistema devolve apenas os clientes cadastrados do usuário logado, caso seja o ADMIN traz todos)
+#
+#
 Exemplo de resposta:
-
+#
+#
 {
   "data": [
     {
@@ -169,10 +196,14 @@ Exemplo de resposta:
     }
   ]
 }
-
+#
+#
 *'API/V1/CLIENTE/{IDCLIENTE} GET - OBTEM UM CLIENTE ESPECIFICO PASSANDO ID
+#
+#
 Exemplo de resposta:
-
+#
+#
 {
   "data": {
     "cpf": "string",
@@ -199,10 +230,14 @@ Exemplo de resposta:
   },
   "errors": {}
 }
-
+#
+#
 *'API/V1/CLIENTE/{OBJ.CLIENTE} POST - CADASTRAR NOVO CLIENTE PASSANDO OBJETO JSON
+#
+#
 Exemplo de requisição:
-
+#
+#
 {
   "cpf": "string",
   "email": "string",
@@ -220,11 +255,14 @@ Exemplo de requisição:
     "id": 0,
   }
 }
- 
-  
+# 
+#  
 *'API/V1/CLIENTE/{OBJ.CLIENTE} PUT - ATUALIZAR UM CLIENTE PASSANDO OBJETO JSON
+#
+#
 Exemplo de requisição:
-
+#
+#
 {
   "cpf": "string",
   "email": "string",
@@ -242,9 +280,14 @@ Exemplo de requisição:
     "id": 0,
   }
 }
-
+#
+#
 *'API/V1/CLIENTE/{IDCLIENTE} DELETE - DELETAR CLIENTE PASSANDO ID
+#
+#
 Exemplo de requisição:
+#
+#
 http://localhost/API/V1/CLIENTE/1 a api irá excluir o cliente do id 1.
 
 
