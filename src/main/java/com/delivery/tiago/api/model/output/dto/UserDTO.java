@@ -1,6 +1,7 @@
 package com.delivery.tiago.api.model.output.dto;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.modelmapper.ModelMapper;
@@ -31,6 +32,7 @@ public class UserDTO {
 	
 	@NotNull(message = "O campo E-mail não pode ser NULL")
 	@NotBlank(message = "O campo E-mail não pode ser em branco")
+	@Email(message = "O email está inválido, tente novamente")
 	private String email;
 	
 	@NotNull(message = "O campo Password não pode ser NULL")

@@ -77,12 +77,12 @@ public class UserController {
 	}
 	
 	
-	@ApiOperation(value = "Metodo para atualização do cadastro público do usuário.")
-	@PutMapping(value = "/api/v1/user")
+	@ApiOperation(value = "Metodo para atualização do cadastro do usuário.")
+	@PutMapping(value = "/api/v1/users")
 	@CrossOrigin(origins = "${front.baseurl}")
 	public ResponseEntity<Response<UserDTO>> putUser(@Valid @RequestBody UserDTO user, BindingResult result){
 		
-		
+		User userLoggd = userAutheticated();
 		
 		Response<UserDTO> response = new Response<>();
 		
@@ -91,6 +91,14 @@ public class UserController {
 			return ResponseEntity.badRequest().body(response);
 		}
 		
+		String emailUser = userLoggd.getEmail();
+		if (!emailUser.equals(user.getEmail())) {
+			boolean emailUsed = repository.findByEmail(user.getEmail()).stream().anyMatch(c -> !c.equals(user));
+			if (emailUsed) {
+				response.addErrorMsgToResponse("Email em já está em uso em outro cadastro!");
+				return ResponseEntity.badRequest().body(response);
+			}
+		}
 		
 		user.setPassword(BcryptUtil.getHash(user.getPassword()));
 		
@@ -100,7 +108,7 @@ public class UserController {
 	    response.setData(userMdl.convertEntityToDTO());
 	    
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-		return new ResponseEntity<>(response, headers, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	
 	}
 	
@@ -128,8 +136,9 @@ public class UserController {
 	
 	@CrossOrigin(origins = "${front.baseurl}")
 	@ApiOperation(value = "Deleta um usuario cadastrado passando o ID.")
-	@DeleteMapping(value = "/api/v1/user/{idUser}")
+	@DeleteMapping(value = "/api/v1/users/{idUser}")
 	public ResponseEntity<Void> delete(@PathVariable Integer idUser) {
+		
 		User userLoggd = userAutheticated();
 		
 

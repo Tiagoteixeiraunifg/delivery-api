@@ -37,15 +37,17 @@ public class ClienteService {
 	
 	@Transactional
 	public Cliente saveCliente(Cliente cliModel) {
+
+		return clienteRepository.save(cliModel);
+		
+	}
+	
+	
+	public boolean emailEmUso(Cliente cliModel) {
 		boolean emailEmUso = clienteRepository.findByEmail(cliModel.getEmail())
 				.stream()
 				.anyMatch(c -> !c.equals(cliModel));
-		
-		if(emailEmUso) {
-			throw new NegocioException("Email em uso em outro cadastro!");
-		}
-		return clienteRepository.save(cliModel);
-		
+		return emailEmUso;
 	}
 
 	

@@ -70,9 +70,11 @@ public class ClientController {
 		}
 
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
-
+	
+	
 	@CrossOrigin(origins = "${front.baseurl}")
 	@ApiOperation(value = "Busca Cliente Cadastrado pelo ID exemplo: dominio/clientes/ID")
 	@GetMapping(value = "/{clienteId}")
@@ -116,6 +118,11 @@ public class ClientController {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
+		
+		if (cliSevice.emailEmUso(dto.convertDtoToEntity())) {
+			response.addErrorMsgToResponse("Email em uso, favor trocar e tentar novamente");
+			return ResponseEntity.badRequest().body(response);
+		}
 
 		Cliente cliMdl = dto.convertDtoToEntity();
 		Cliente cliSaved = clienteRepository.save(cliMdl);
@@ -127,30 +134,37 @@ public class ClientController {
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 
+	
+	
 	@CrossOrigin(origins = "${front.baseurl}")
 	@ApiOperation(value = "Atualiza um cliente cadastrado informando o ID do mesmo.")
 	@PutMapping(value = "/{clienteId}")
-	public ResponseEntity<Response<ClientesDTO>> updateCliente(@Valid @PathVariable Integer clienteId,
-			@RequestBody Cliente cliModel, BindingResult result) {
+	public ResponseEntity<Response<ClientesDTO>> updateCliente( @PathVariable Integer clienteId,
+			@Valid @RequestBody ClientesDTO dto, BindingResult result) {
+		
 		Response<ClientesDTO> response = new Response<>();
-
+		
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-
+		
 		if (!clienteRepository.existsById(clienteId)) {
 			return ResponseEntity.notFound().build();
 		}
-
-		cliModel.setId(clienteId);
-		cliModel = cliSevice.saveCliente(cliModel);
-
-		response.setData(cliModel.convertEntityToDTO());
+		
+		Cliente cliModel = dto.convertDtoToEntity();
+		Cliente CliUpdated = cliSevice.saveCliente(cliModel);
+		ClientesDTO CliDTOUpdated = CliUpdated.convertEntityToDTO();
+		response.setData(CliDTOUpdated);
+		
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
+		
 	}
 
+	
+	
 	@CrossOrigin(origins = "${front.baseurl}")
 	@ApiOperation(value = "Deleta um cliente cadastrado passando o ID.")
 	@DeleteMapping(value = "/{clienteId}")
