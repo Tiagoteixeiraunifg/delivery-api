@@ -60,7 +60,7 @@ public class UserController {
 		}
 		
 		if(user.getUserperfil() == null) {
-			user.setUserperfil(UserPerfil.ADMIN);
+			user.setUserperfil(UserPerfil.ADMIN.getValue());
 		}
 		
 		user.setPassword(BcryptUtil.getHash(user.getPassword()));
@@ -92,6 +92,7 @@ public class UserController {
 		}
 		
 		String emailUser = userLoggd.getEmail();
+		
 		if (!emailUser.equals(user.getEmail())) {
 			boolean emailUsed = repository.findByEmail(user.getEmail()).stream().anyMatch(c -> !c.equals(user));
 			if (emailUsed) {
@@ -126,6 +127,7 @@ public class UserController {
 		if (userLoggd.getUserperfil().equals(UserPerfil.ADMIN)) {
 			response.setData(userAssembler.toListUserDTO(repository.findAll()));
 		} else {
+			response.addErrorMsgToResponse("Somente administrador pode listar os usuários!");
 			return ResponseEntity.badRequest().body(response);
 		}
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
@@ -133,6 +135,7 @@ public class UserController {
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 
 	}
+	
 	
 	@CrossOrigin(origins = "${front.baseurl}")
 	@ApiOperation(value = "Deleta um usuario cadastrado passando o ID.")

@@ -14,6 +14,7 @@ public class ClienteService {
 
 	private ClienteRepository clienteRepository;
 	
+	
 	public Cliente findById(Integer id) {
 		
 		return  clienteRepository.findById(id)
@@ -21,11 +22,16 @@ public class ClienteService {
 		
 	}
 	
-	
 	public Optional<Cliente> findByIdAndUserId(Integer id, Integer userId) {
 		
 		return  clienteRepository.findByIdAndUserId(id, userId);
 				
+	}
+	
+	public Optional<Cliente> findByEmail(String email){
+		
+		return clienteRepository.findByEmail(email);
+		
 	}
 	
 	public Optional<Cliente> findByIdOpt(Integer id) {
@@ -57,10 +63,4 @@ public class ClienteService {
 		clienteRepository.deleteById(idCLiente);
 	}
 	
-	
-	public Cliente updateCliente(Long IdCliente, Cliente cliModel) {
-		
-		return cliModel;
-		
-	}
 }

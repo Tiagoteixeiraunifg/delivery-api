@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.delivery.tiago.api.filters.JwtAuthenticationEntryPointFilter;
 import com.delivery.tiago.api.filters.TokenAuthenticationFilter;
 import com.delivery.tiago.domain.repository.UserRepository;
@@ -56,15 +55,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //Configuration for authorization
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	if (userProfile.equals("test")) {
+            http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+        } else {
     	http.authorizeRequests().antMatchers("/api/v1/user/auth/**", "/api/v1/user/**", "/configuration/security", "/webjars/**", 
     			"/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/manage/**").permitAll()
     	.anyRequest().authenticated()
     	.and().cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
     	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     	.and().addFilterBefore(new TokenAuthenticationFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);
+        }
 
     }
-
+    
+    
     //Ingnorando a interceptação das requisições no Swagger2
     @Override
     public void configure(WebSecurity web) throws Exception {

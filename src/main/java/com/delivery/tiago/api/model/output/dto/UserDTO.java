@@ -4,19 +4,24 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.modelmapper.ModelMapper;
+import javax.validation.constraints.Pattern;
 
+import org.modelmapper.ModelMapper;
 import com.delivery.tiago.domain.ValidationsGroup;
 import com.delivery.tiago.domain.model.User;
-import com.delivery.tiago.domain.model.UserPerfil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
 	
 	@NotNull(groups = ValidationsGroup.userId.class)
@@ -41,9 +46,12 @@ public class UserDTO {
 	
 	@JsonProperty(access = Access.AUTO)
 	@Enumerated(EnumType.STRING)
-	private UserPerfil userperfil;
+	@Pattern(regexp="^(ADMIN|USUARIO)$", 
+	message="O tipo de perfil esperado é ADMIN ou USUARIO")
+	private String userperfil;
 		
 	private String token;
+	
 	
 	public User convertDTOToEntity() {
 		return new ModelMapper().map(this, User.class);

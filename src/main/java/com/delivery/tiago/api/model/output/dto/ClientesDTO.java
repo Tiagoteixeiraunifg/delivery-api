@@ -11,11 +11,16 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.modelmapper.ModelMapper;
 import com.delivery.tiago.domain.ValidationsGroup;
 import com.delivery.tiago.domain.model.Cliente;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientesDTO {
 	
 	

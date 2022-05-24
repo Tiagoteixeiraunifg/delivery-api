@@ -13,6 +13,13 @@
 	<artifactId>delivery-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>delivery-api</name>
+	<developers>
+		<developer>
+			<name>Tiago Teixeira</name>
+			<email>tiagoteixeiragbi@gmail.com</email>
+			<timezone>UTC-03:00</timezone>
+		</developer>
+	</developers>
 	<description>exemplo de api simples</description>
 	<properties>
 		<java.version>11</java.version>
