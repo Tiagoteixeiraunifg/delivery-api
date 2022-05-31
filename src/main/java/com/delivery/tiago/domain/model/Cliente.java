@@ -1,6 +1,5 @@
 package com.delivery.tiago.domain.model;
-
-
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.modelmapper.ModelMapper;
 import com.delivery.tiago.api.model.output.dto.ClientesDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -98,6 +99,13 @@ public class Cliente {
 	//@Size(max = 10)
 	@Column(nullable = false, length = 10)
 	private String end_cep;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime datacriacao;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataatualizacao;
+	
 	
 	public ClientesDTO convertEntityToDTO() {
 		return new ModelMapper().map(this, ClientesDTO.class);

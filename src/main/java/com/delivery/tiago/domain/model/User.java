@@ -1,5 +1,5 @@
 package com.delivery.tiago.domain.model;
-
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -52,6 +52,12 @@ public class User {
 	@JsonProperty(access = Access.READ_ONLY)
 	@Enumerated(EnumType.STRING)
 	private UserPerfil userperfil;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime datacriacao;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataatualizacao;
 	
 	public UserDTO convertEntityToDTO() {
 		return new ModelMapper().map(this, UserDTO.class);

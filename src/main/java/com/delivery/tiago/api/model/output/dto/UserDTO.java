@@ -1,4 +1,7 @@
 package com.delivery.tiago.api.model.output.dto;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
@@ -52,6 +55,11 @@ public class UserDTO {
 		
 	private String token;
 	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime datacriacao;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataatualizacao;
 	
 	public User convertDTOToEntity() {
 		return new ModelMapper().map(this, User.class);

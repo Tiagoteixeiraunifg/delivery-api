@@ -1,5 +1,6 @@
 package com.delivery.tiago.domain.service.cliente;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -43,11 +44,17 @@ public class ClienteService {
 	
 	@Transactional
 	public Cliente saveCliente(Cliente cliModel) {
-
+			cliModel.setDatacriacao(LocalDateTime.now());
 		return clienteRepository.save(cliModel);
 		
 	}
 	
+	@Transactional
+	public Cliente updateCliente(Cliente cliModel) {
+			cliModel.setDataatualizacao(LocalDateTime.now());
+		return clienteRepository.save(cliModel);
+		
+	}
 	
 	public boolean emailEmUso(Cliente cliModel) {
 		boolean emailEmUso = clienteRepository.findByEmail(cliModel.getEmail())

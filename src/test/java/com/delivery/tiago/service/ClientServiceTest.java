@@ -3,6 +3,7 @@ package com.delivery.tiago.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
@@ -21,12 +22,12 @@ import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-
 import com.delivery.tiago.domain.model.Cliente;
 import com.delivery.tiago.domain.model.User;
 import com.delivery.tiago.domain.model.UserPerfil;
 import com.delivery.tiago.domain.repository.ClienteRepository;
 import com.delivery.tiago.domain.service.cliente.ClienteService;
+
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -45,7 +46,8 @@ public class ClientServiceTest {
 	static final String EMAIL = "email@test.com";
 	static final Integer ID_USER = 1;
 	static final Integer ID_CLIENT = 2;
-	
+	static final LocalDateTime DATACRIACAO = LocalDateTime.now();
+	static final LocalDateTime DATAATUALIZACAO = LocalDateTime.now();
 	
 	@Test
 	@Order(1)
@@ -86,15 +88,16 @@ public class ClientServiceTest {
 	
 	
 	private User getMockUser() {
-		return new User(2, "Test User", "Test Sobrenome", "123", EMAIL, UserPerfil.ADMIN );
+		return new User(2, "Test User", "Test Sobrenome", "123", EMAIL, UserPerfil.ADMIN, DATACRIACAO, DATAATUALIZACAO );
 	}
 	
 	
 	private Cliente getMockCliente() {
 		return new Cliente(1,getMockUser(), "Test User", "Test Sobrenome", "030.861.705.55",
 							"77991880000", EMAIL, "test rua", "test complemento","guanambi",
-							"123","bahia","46430000"  );
+							"123","bahia","46430000", DATACRIACAO, DATAATUALIZACAO  );
 	}
+	
 	
 
 	@AfterAll

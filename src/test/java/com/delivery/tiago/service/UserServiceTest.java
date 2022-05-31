@@ -3,6 +3,7 @@ package com.delivery.tiago.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
@@ -67,7 +68,7 @@ public class UserServiceTest {
 	
 
 	private User getMockUser() {
-		return new User(2, "Test User", "Test Sobrenome", "123", EMAIL, UserPerfil.ADMIN );
+		return new User(2, "Test User", "Test Sobrenome", "123", EMAIL, UserPerfil.ADMIN, LocalDateTime.now(), LocalDateTime.now() );
 	}
 	
 

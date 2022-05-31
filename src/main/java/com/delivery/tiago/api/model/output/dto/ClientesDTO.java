@@ -1,17 +1,20 @@
 package com.delivery.tiago.api.model.output.dto;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 import org.modelmapper.ModelMapper;
 import com.delivery.tiago.domain.ValidationsGroup;
+import com.delivery.tiago.domain.ValidationsGroup.userId;
 import com.delivery.tiago.domain.model.Cliente;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ClientesDTO {
 	
-	
+
 	private Integer id;
 	
 	@Valid
@@ -77,6 +80,12 @@ public class ClientesDTO {
 	@NotBlank(message = "O campo CEP não pode está em BRANCO")
 	private String end_cep;
 
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime datacriacao;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataatualizacao;
+	
 	public Cliente convertDtoToEntity() {
 		return new ModelMapper().map(this, Cliente.class);
 	}

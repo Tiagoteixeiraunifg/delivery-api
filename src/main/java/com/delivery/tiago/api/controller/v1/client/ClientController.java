@@ -154,7 +154,7 @@ public class ClientController {
 		}
 		
 		Cliente cliModel = dto.convertDtoToEntity();
-		Cliente CliUpdated = cliSevice.saveCliente(cliModel);
+		Cliente CliUpdated = cliSevice.updateCliente(cliModel);
 		ClientesDTO CliDTOUpdated = CliUpdated.convertEntityToDTO();
 		response.setData(CliDTOUpdated);
 		

@@ -1,7 +1,9 @@
 package com.delivery.tiago.controller;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
@@ -25,7 +27,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
 import com.delivery.tiago.api.model.output.dto.UserDTO;
 import com.delivery.tiago.domain.model.User;
 import com.delivery.tiago.domain.model.UserPerfil;
@@ -51,6 +52,8 @@ public class UserControllerTest {
 	static final String PASSWORD = "123";
 	static final String EMAIL = "email@test.com";
 	static final String TOKEN = "test";	
+	static final LocalDateTime DATACRIACAO = LocalDateTime.now();
+	static final LocalDateTime DATAATUALIZACAO = LocalDateTime.now();
 	
 	HttpHeaders headers;
 	
@@ -72,7 +75,8 @@ public class UserControllerTest {
 		
 		BDDMockito.given(userService.save(Mockito.any(User.class))).willReturn(getMockUser());
 		
-		mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, NAME, LAST_NAME, EMAIL, PASSWORD, UserPerfil.ADMIN, TOKEN))
+		mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, NAME, LAST_NAME, EMAIL, 
+											PASSWORD, UserPerfil.ADMIN, TOKEN, DATACRIACAO, DATAATUALIZACAO))
 			.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).headers(headers))
 		.andDo(MockMvcResultHandlers.print())
 		.andExpect(status().isCreated())
@@ -86,16 +90,17 @@ public class UserControllerTest {
 	
 	
 	private User getMockUser() {
-		return new User(1, NAME, LAST_NAME, EMAIL, PASSWORD, UserPerfil.ADMIN );
+		return new User(1, NAME, LAST_NAME, EMAIL, PASSWORD, UserPerfil.ADMIN, DATACRIACAO, DATAATUALIZACAO );
 	}
 	
 	
 	private String getJsonPayload(Long id, String name, String lastName, String email, String password,
-			UserPerfil userPerfil, String token ) throws JsonProcessingException {
+			UserPerfil userPerfil, String token, LocalDateTime datacriacao, LocalDateTime dataatualizacao ) throws JsonProcessingException {
 		
-		UserDTO dto = new UserDTO(id, name, lastName, email, password, userPerfil.getValue(), token);
+		UserDTO dto = new UserDTO(id, name, lastName, email, password, userPerfil.getValue(), token, datacriacao, dataatualizacao);
 		
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.findAndRegisterModules();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		return mapper.writeValueAsString(dto);
 	

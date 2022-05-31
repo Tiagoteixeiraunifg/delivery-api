@@ -1,8 +1,9 @@
 package com.delivery.tiago.controller;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.ParseException;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -25,14 +26,13 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
 import com.delivery.tiago.api.model.output.dto.ClientesDTO;
 import com.delivery.tiago.api.model.output.dto.UserDTO;
+import com.delivery.tiago.common.UtilApi;
 import com.delivery.tiago.domain.model.Cliente;
 import com.delivery.tiago.domain.model.User;
 import com.delivery.tiago.domain.model.UserPerfil;
 import com.delivery.tiago.domain.service.cliente.ClienteService;
-import com.delivery.tiago.domain.service.user.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -58,7 +58,9 @@ public class ClientControllerTest {
 	static final String END_NUMERO = "123456";
 	static final String END_ESTADO = "BAHIA";
 	static final String END_CEP = "46430000";
-	
+	static final String DATACRIACAO = "2020-08-21T18:32:04.150";
+	static final String DATAATUALIZACAO = "2020-08-21T18:32:04.150";
+
 
 	HttpHeaders headers;
 	
@@ -82,7 +84,7 @@ public class ClientControllerTest {
 		
 		
 		mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID_CLI, getMockUser().convertEntityToDTO(), NOME, SOBRENOME, CPF,
-				TELEFONE, EMAIL, END_RUA, END_COMPLEMENTO,END_CIDADE,END_NUMERO,END_ESTADO, END_CEP ))
+				TELEFONE, EMAIL, END_RUA, END_COMPLEMENTO,END_CIDADE,END_NUMERO,END_ESTADO, END_CEP))
 			.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).headers(headers))
 		.andDo(MockMvcResultHandlers.print())
 		.andExpect(status().isOk())
@@ -103,30 +105,44 @@ public class ClientControllerTest {
 	
 	
 	
-	private User getMockUser() {
-		return new User(2, "Test User", "Test Sobrenome", "123", EMAIL, UserPerfil.ADMIN );
+	private User getMockUser() throws ParseException{
+		return new User(2, "Test User", "Test Sobrenome", 
+				"123", EMAIL, UserPerfil.ADMIN, 
+				UtilApi.getLocalDateTimeFromString(DATACRIACAO.concat("Z")),
+				UtilApi.getLocalDateTimeFromString(DATAATUALIZACAO.concat("Z")));
 	}
 	
 	
-	private Cliente getMockCliente() {
+	private Cliente getMockCliente() throws ParseException{
 		return new Cliente(ID_CLI,getMockUser(), NOME, SOBRENOME, CPF,
 							TELEFONE, EMAIL, END_RUA, END_COMPLEMENTO,END_CIDADE,
-							END_NUMERO,END_ESTADO, END_CEP  );
+							END_NUMERO,END_ESTADO, END_CEP, 
+							UtilApi.getLocalDateTimeFromString(DATACRIACAO.concat("Z")),
+							UtilApi.getLocalDateTimeFromString(DATAATUALIZACAO.concat("Z")));
 	}
 	
 	
 	private String getJsonPayload(int id, UserDTO usrDTO,String name, String lastName, 
 								String cpf, String telefone, String email, String endRua,
 								String endComplemento, String endCidade, String endNumero, 
-								String endEstado, String endCep) throws JsonProcessingException {
+								String endEstado, String endCep) throws JsonProcessingException, ParseException {
 		
 		ClientesDTO dto = new ClientesDTO(id, usrDTO, name, lastName, cpf, telefone, email, 
 											endRua, endComplemento,	endCidade, endNumero,
-											endEstado, endCep);
+											endEstado, endCep, 
+											UtilApi.getLocalDateTimeFromString(DATACRIACAO.concat("Z")),
+											UtilApi.getLocalDateTimeFromString(DATAATUALIZACAO.concat("Z")));
 		
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.findAndRegisterModules();
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		return mapper.writeValueAsString(dto);
 	
+	}
+	
+	
+	@AfterAll
+	private void tearDown() {
+		clientService.deleteCliente(1);
 	}
 }

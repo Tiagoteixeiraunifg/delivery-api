@@ -1,5 +1,4 @@
 package com.delivery.tiago.api.controller.v1.user;
-
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.delivery.tiago.api.assembler.UserAssembler;
 import com.delivery.tiago.api.model.output.dto.UserDTO;
 import com.delivery.tiago.api.model.output.dto.response.Response;
+import com.delivery.tiago.common.UtilApi;
 import com.delivery.tiago.domain.exception.NegocioException;
 import com.delivery.tiago.domain.model.User;
 import com.delivery.tiago.domain.model.UserPerfil;
@@ -34,7 +34,8 @@ import lombok.AllArgsConstructor;
 @RestController
 @Api(value = "Cadastro de usuarios da API")
 public class UserController {
-	
+
+
 	private UserAssembler userAssembler;
 	private UserService service;
 	private UserRepository repository;
@@ -46,18 +47,23 @@ public class UserController {
 	public ResponseEntity<Response<UserDTO>> postUser(@Valid @RequestBody UserDTO user, BindingResult result){
 
 		Response<UserDTO> response = new Response<>();
-		
+
+		UtilApi utilApi = new UtilApi();
+		if(utilApi.isValidEmailAddressRegex(user.getEmail())) {
+			boolean emailUsed = repository.findByEmail(user.getEmail())
+					.stream()
+					.anyMatch(c -> !c.equals(user));
+			if(emailUsed) {
+				throw new NegocioException("Email em já está em uso em outro cadastro!");
+			}
+		}
+				
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		boolean emailUsed = repository.findByEmail(user.getEmail())
-				.stream()
-				.anyMatch(c -> !c.equals(user));
-		if(emailUsed) {
-			throw new NegocioException("Email em já está em uso em outro cadastro!");
-		}
+
 		
 		if(user.getUserperfil() == null) {
 			user.setUserperfil(UserPerfil.ADMIN.getValue());
@@ -104,7 +110,7 @@ public class UserController {
 		user.setPassword(BcryptUtil.getHash(user.getPassword()));
 		
 		User userMdl = user.convertDTOToEntity();
-	    userMdl = service.save(userMdl);
+	    userMdl = service.update(userMdl);
 	    
 	    response.setData(userMdl.convertEntityToDTO());
 	    
@@ -150,7 +156,7 @@ public class UserController {
 		}
 		
 		if(!userLoggd.getUserperfil().equals(UserPerfil.ADMIN)) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().build();
 		}
 		service.deleteUser(idUser);
 		return ResponseEntity.noContent().build();
