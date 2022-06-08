@@ -24,7 +24,8 @@ principal e clica com o botão direito, procure Maven, e depois em Update Projec
 
 ### EXEMPLO POM.XML
 
-```spring.datasource.url=jdbc:mysql://SEU_URL_DO_BANCO_DE_DADOS:3306/delivery?createDatabaseIfNotExist=true&serverTimezone=UTC
+```
+spring.datasource.url=jdbc:mysql://SEU_URL_DO_BANCO_DE_DADOS:3306/delivery?createDatabaseIfNotExist=true&serverTimezone=UTC
 spring.datasource.username=USUARIO BANCO
 spring.datasource.password=SENHA DO BANCO
 
