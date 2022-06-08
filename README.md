@@ -1,28 +1,30 @@
-# API SISTEMA A3
+### API SISTEMA A3
+
 API Rest utilizando o ecossistema Spring Boot, Spring MVC, Spring WEB, 
 Spring Data, Spring Security, JWT, Lombok, DevTools, ModelMapper, Flyway, 
 Bean Validation, Hibernate ORM, MySQL DataBase, Swagger2.
 
-# IDE
+### IDE
 Utilizado o STS - Spring Tools Suite 4
 
-# PLUGINS PARA IDE
+### PLUGINS PARA IDE
 Necessário instalar o Lombok.
 
-https://projectlombok.org/downloads/lombok.jar
-Para ajudar na instalação https://projectlombok.org/setup/eclipse
+`https://projectlombok.org/downloads/lombok.jar`
+Para ajudar na instalação `https://projectlombok.org/setup/eclipse`
 
 
-# INSTALAÇÃO
+### INSTALAÇÃO
 
-Clonar o repositório e configurar a pasta princippal do STS a mesma que recebeu o projeto.
-Ao iniciar o projeto com o STS o mesmo atualizarar as dependencias de acordo com o POM.XML, caso não faça vá no pasta 
+* Clonar o repositório e configurar a pasta princippal do STS a mesma que recebeu o projeto.
+* Ao iniciar o projeto com o STS o mesmo atualizarar as dependencias de acordo com o POM.XML, caso não faça vá no pasta 
 principal e clica com o botão direito, procure Maven, e depois em Update Project, só aguardar.
-Necessário ter instalado um SGBD MySQL e configurar o Usuário, Senha e URL no src/main/resources/aplication.properties
-Obs. Não á necessidade de criar o Banco de Dados, o Sprig Data JPA já faz isso usando o; delivery?createDatabaseIfNotExist=true.
+* Necessário ter instalado um SGBD MySQL e configurar o Usuário, Senha e URL no `src/main/resources/aplication.properties`
+* Obs. Não á necessidade de criar o Banco de Dados, o Sprig Data JPA já faz isso usando o; `delivery?createDatabaseIfNotExist=true`.
 
-# EXEMPLO POM.XML
-spring.datasource.url=jdbc:mysql://SEU_URL_DO_BANCO_DE_DADOS:3306/delivery?createDatabaseIfNotExist=true&serverTimezone=UTC
+### EXEMPLO POM.XML
+
+```spring.datasource.url=jdbc:mysql://SEU_URL_DO_BANCO_DE_DADOS:3306/delivery?createDatabaseIfNotExist=true&serverTimezone=UTC
 spring.datasource.username=USUARIO BANCO
 spring.datasource.password=SENHA DO BANCO
 
@@ -30,36 +32,40 @@ spring.jpa.show-sql=true HABILITANDO MOSTRARÁ AS CONSULTAS DO BANCO NO CONSOLE
 
 spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
 
-#Configurações JWT
+**Configurações JWT**
 jwt.secret=#qweernadnamdn19820918209!#ajhad SENHA SECRETA
 jwt.expiration=600000 TEMPO DE EXPIRAÇÃO DO TOKEN JWT
  
-#Configuração API
+**Configuração API**
 spring.profiles.active=dev PERFIL DE INICIALIZAÇÃO
 prop.swagger.enabled=true HABILITANDO A DOCUMENTAÇÃO AUTOMÁTICA DA API 
 spring.mvc.pathmatch.matching-strategy=ant-path-matcher 
 
-#Configuração FRONTEND
+**Configuração FRONTEND**
 front.baseurl=http://localhost:3000 BASE URL DO FRONT-END CONFIGURAÇÃO DO CORS
+```
+
+### ENDPOINTS
+
+### ROTAS COM * SERÃO ROTAS PROTEGIDAS;
+
+**ROTAS DE AUTENTICAÇÃO**
 
 
-# ENDPOINTS
+`'API/V1/AUTH'`; GET - PASSA UM USUARIO PARA OBTER UM TOKEN DE ACESSO E DADOS DO USUARIO
 
-ROTAS COM * SERÃO ROTAS PROTEGIDAS;
-#
-/*ROTAS DE AUTENTICAÇÃO*/
-#
-'API/V1/AUTH'; GET - PASSA UM USUARIO PARA OBTER UM TOKEN DE ACESSO E DADOS DO USUARIO
-#
-Exemplo de requisição:
-#
+**Exemplo de requisição:**
+
+```json
 {
   "email": "string",
   "password": "string"
 }
-#
-Como resposta a API devolve:
-#
+```
+
+**Como resposta a API devolve:**
+
+```json
 {
   "data": {
     "email": "string",
@@ -71,13 +77,15 @@ Como resposta a API devolve:
     "userperfil": "ADMIN"
   }
 }
-#
-/*ROTAS DE USUÁRIOS*/
-#
-*'API/V1/USERS' GET - OBTER LISTA DE USUARIOS (controlado pelo perfil do usuário logado, retornando apenas o seu usuário, caso seja admin retorna full)
-#
-Exemplo de requisição:
-#
+```
+
+**ROTAS DE USUÁRIOS**
+
+`'API/V1/USERS'` GET - OBTER LISTA DE USUARIOS (controlado pelo perfil do usuário logado, retornando apenas o seu usuário, caso seja admin retorna full)
+
+**Exemplo de requisição:**
+
+```json
 {
   "data": [
     {
@@ -91,11 +99,13 @@ Exemplo de requisição:
     }
   ]
 }
-# 
-*'API/V1/USER/{IDUSUARIO}' GET - OBTEM UM USUÁRIO ESPECIFICO PASSANDO ID
-#
-Exemplo do retorno:
-#
+```
+ 
+`'API/V1/USER/{IDUSUARIO}'` GET - OBTEM UM USUÁRIO ESPECIFICO PASSANDO ID
+
+**Exemplo do retorno:**
+
+```json
 {
   "data": {
     "email": "string",
@@ -107,11 +117,13 @@ Exemplo do retorno:
     "userperfil": "ADMIN"
   }
 }
-#
- 'API/V1/USER/{OBJ.USER}' POST - CADASTRAR NOVO USUÁRIO PASSANDO OBJETO JSON
-#
-Exemplo da requisição:
-#
+```
+ 
+`'API/V1/USER/{OBJ.USER}'` POST - CADASTRAR NOVO USUÁRIO PASSANDO OBJETO JSON
+
+**Exemplo da requisição:**
+
+```json
 {
   "email": "string",
   "id": 0,
@@ -121,11 +133,14 @@ Exemplo da requisição:
   "token": "string",
   "userperfil": "ADMIN" ou "USUARIO"
 }
-#
-*'API/V1/USER/{OBJ.USER}' PUT - ATUALIZAR UM USUÁRIO PASSANDO OBJETO JSON
-#
-Exemplo da requisição;
-#
+```
+
+`'API/V1/USER/{OBJ.USER}'` PUT - ATUALIZAR UM USUÁRIO PASSANDO OBJETO JSON
+
+
+**Exemplo da requisição;**
+
+```json
 {
   "email": "string",
   "id": 1, Obs. O ID tem de sero do usuario a ser atualizado.
@@ -135,19 +150,20 @@ Exemplo da requisição;
   "token": "string",
   "userperfil": "ADMIN"
 }
-#
-*'API/V1/USER/{IDUSUARIO} DELETE - DELETAR USUÁRIO PASSANDO ID
-#
-Exemplo da requisição:
-#
-http://localhost/API/V1/USER/1, isso deletará o usuário do ID 1, se o usuário que solicitou for um ADMIN.
-#
-/*ROTAS DO CADASTRO DE CLIENTES*/
-#
-*'API/V1/CLIENTE/ GET - OBTER LISTA DE USUARIOS (o sistema devolve apenas os clientes cadastrados do usuário logado, caso seja o ADMIN traz todos)
-#
-Exemplo de resposta:
-#
+```
+`'API/V1/USER/{IDUSUARIO}` DELETE - DELETAR USUÁRIO PASSANDO ID
+
+**Exemplo da requisição:**
+
+`http://localhost/API/V1/USER/1`, isso deletará o usuário do ID 1, se o usuário que solicitou for um ADMIN.
+
+**ROTAS DO CADASTRO DE CLIENTES**
+
+`'API/V1/CLIENTE/` GET - OBTER LISTA DE USUARIOS (o sistema devolve apenas os clientes cadastrados do usuário logado, caso seja o ADMIN traz todos)
+
+**Exemplo de resposta:**
+
+```json
 {
   "data": [
     {
@@ -175,11 +191,14 @@ Exemplo de resposta:
     }
   ]
 }
-#
-*'API/V1/CLIENTE/{IDCLIENTE} GET - OBTEM UM CLIENTE ESPECIFICO PASSANDO ID
-#
-Exemplo de resposta:
-#
+```
+
+`'API/V1/CLIENTE/{IDCLIENTE}` GET - OBTEM UM CLIENTE ESPECIFICO PASSANDO ID
+
+
+**Exemplo de resposta:**
+
+```json
 {
   "data": {
     "cpf": "string",
@@ -206,11 +225,13 @@ Exemplo de resposta:
   },
   "errors": {}
 }
-#
-*'API/V1/CLIENTE/{OBJ.CLIENTE} POST - CADASTRAR NOVO CLIENTE PASSANDO OBJETO JSON
-#
-Exemplo de requisição:
-#
+```
+`'API/V1/CLIENTE/{OBJ.CLIENTE}` POST - CADASTRAR NOVO CLIENTE PASSANDO OBJETO JSON
+
+
+**Exemplo de requisição:**
+
+```json
 {
   "cpf": "string",
   "email": "string",
@@ -228,11 +249,12 @@ Exemplo de requisição:
     "id": 0,
   }
 }
-#  
-*'API/V1/CLIENTE/{OBJ.CLIENTE} PUT - ATUALIZAR UM CLIENTE PASSANDO OBJETO JSON
-#
-Exemplo de requisição:
-#
+```  
+`'API/V1/CLIENTE/{OBJ.CLIENTE}` PUT - ATUALIZAR UM CLIENTE PASSANDO OBJETO JSON
+
+**Exemplo de requisição:**
+
+```json
 {
   "cpf": "string",
   "email": "string",
@@ -250,12 +272,16 @@ Exemplo de requisição:
     "id": 0,
   }
 }
-#
-*'API/V1/CLIENTE/{IDCLIENTE} DELETE - DELETAR CLIENTE PASSANDO ID
-#
-Exemplo de requisição:
-#
-http://localhost/API/V1/CLIENTE/1 a api irá excluir o cliente do id 1.
+```
+`'API/V1/CLIENTE/{IDCLIENTE}` DELETE - DELETAR CLIENTE PASSANDO ID
 
+**Exemplo de requisição:**
+
+
+`http://localhost/API/V1/CLIENTE/1` a api irá excluir o cliente do id 1.
+
+### License
+
+This API is licensed under the MIT License.
 
 
